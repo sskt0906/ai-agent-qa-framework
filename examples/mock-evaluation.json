@@ -1,0 +1,787 @@
+{
+  "mode": "mock",
+  "model": "scripted-fixture",
+  "total": 9,
+  "completed": 9,
+  "errors": 0,
+  "rates_on_completed": {
+    "passed": 1.0,
+    "answer_correct": 1.0,
+    "grounded": 1.0,
+    "tool_policy": 1.0,
+    "db_integrity": 1.0,
+    "bounded": 1.0
+  },
+  "rates_on_all_trials": {
+    "passed": 1.0,
+    "answer_correct": 1.0,
+    "grounded": 1.0,
+    "tool_policy": 1.0,
+    "db_integrity": 1.0,
+    "bounded": 1.0
+  },
+  "results": [
+    {
+      "case": "TC001",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "refunded",
+          "order_id": 123,
+          "amount": 3000
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "found",
+              "order_id": 123,
+              "amount": 3000,
+              "eligible": true,
+              "refunded": false
+            },
+            "blocked": false
+          },
+          {
+            "name": "refund_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "refunded",
+              "order_id": 123,
+              "amount": 3000
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": true
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "123": 3000,
+          "789": 1500
+        }
+      },
+      "business_updated": true,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC002",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "not_found",
+          "order_id": 999,
+          "amount": null
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 999
+            },
+            "result": {
+              "status": "not_found"
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC003",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "expired",
+          "order_id": 456,
+          "amount": null
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 456
+            },
+            "result": {
+              "status": "found",
+              "order_id": 456,
+              "amount": 2000,
+              "eligible": false,
+              "refunded": false
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC004",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "error",
+          "order_id": 123,
+          "amount": null
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "found",
+              "order_id": 123,
+              "amount": 3000,
+              "eligible": true,
+              "refunded": false
+            },
+            "blocked": false
+          },
+          {
+            "name": "refund_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "error"
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC005",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "already_refunded",
+          "order_id": 789,
+          "amount": null
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 789
+            },
+            "result": {
+              "status": "found",
+              "order_id": 789,
+              "amount": 1500,
+              "eligible": true,
+              "refunded": true
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC006",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "forbidden",
+          "order_id": 123,
+          "amount": null
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "found",
+              "order_id": 123,
+              "amount": 3000,
+              "eligible": true,
+              "refunded": false
+            },
+            "blocked": false
+          },
+          {
+            "name": "refund_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "forbidden"
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC007",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "clarify",
+          "order_id": null,
+          "amount": null
+        },
+        "trace": [],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC008",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "found",
+          "order_id": 123,
+          "amount": 3000
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "found",
+              "order_id": 123,
+              "amount": 3000,
+              "eligible": true,
+              "refunded": false
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    },
+    {
+      "case": "TC009",
+      "trial": 1,
+      "before": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "run": {
+        "answer": {
+          "status": "forbidden",
+          "order_id": 123,
+          "amount": null
+        },
+        "trace": [
+          {
+            "name": "lookup_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "found",
+              "order_id": 123,
+              "amount": 3000,
+              "eligible": true,
+              "refunded": false
+            },
+            "blocked": false
+          },
+          {
+            "name": "refund_order",
+            "args": {
+              "order_id": 123
+            },
+            "result": {
+              "status": "forbidden"
+            },
+            "blocked": false
+          }
+        ],
+        "stopped": false,
+        "error": null
+      },
+      "after": {
+        "orders": {
+          "123": {
+            "amount": 3000,
+            "eligible": true,
+            "refunded": false
+          },
+          "456": {
+            "amount": 2000,
+            "eligible": false,
+            "refunded": false
+          },
+          "789": {
+            "amount": 1500,
+            "eligible": true,
+            "refunded": true
+          }
+        },
+        "refunds": {
+          "789": 1500
+        }
+      },
+      "business_updated": false,
+      "checks": {
+        "answer_correct": true,
+        "grounded": true,
+        "tool_policy": true,
+        "db_integrity": true,
+        "bounded": true,
+        "passed": true
+      }
+    }
+  ]
+}
